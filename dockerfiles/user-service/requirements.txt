@@ -1,0 +1,5 @@
+# dockerfiles/user-service/requirements.txt
+# Минимальные зависимости для метрик и HTTP сервера
+prometheus-client==0.17.1
+psycopg2-binary==2.9.7  # Для подключения к PostgreSQL
+requests==2.31.0

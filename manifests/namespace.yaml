@@ -1,0 +1,8 @@
+# manifests/00-namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: microservices-demo
+  labels:
+    name: microservices-demo
+    env: learning

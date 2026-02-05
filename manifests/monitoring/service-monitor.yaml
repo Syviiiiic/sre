@@ -1,0 +1,21 @@
+# manifests/04-monitoring/service-monitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: microservices-monitor
+  namespace: microservices-demo
+  labels:
+    app: microservices-monitor
+spec:
+  selector:
+    matchLabels:
+      app: user-service
+  endpoints:
+  - port: 8000
+    path: /metrics
+    interval: 15s
+    scrapeTimeout: 10s
+    honorLabels: true
+  namespaceSelector:
+    matchNames:
+    - microservices-demo

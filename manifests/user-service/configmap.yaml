@@ -1,0 +1,27 @@
+# manifests/02-user-service/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-service-config
+  namespace: microservices-demo
+data:
+  app_config.yaml: |
+    database:
+      host: postgres
+      port: 5432
+      name: microservices
+      user: admin
+      pool_min: 1
+      pool_max: 10
+    
+    server:
+      host: 0.0.0.0
+      port: 8000
+      workers: 2
+      log_level: INFO
+    
+    metrics:
+      enabled: true
+      port: 8000
+      path: /metrics
+      interval: 15s

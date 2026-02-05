@@ -1,0 +1,42 @@
+# manifests/05-load-test/load-generator.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-generator
+  namespace: microservices-demo
+  labels:
+    app: load-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: load-generator
+  template:
+    metadata:
+      labels:
+        app: load-generator
+    spec:
+      containers:
+      - name: load-generator
+        image: alpine/curl:latest
+        command:
+        - /bin/sh
+        - -c
+        - |
+          while true; do
+            # Генерируем разную нагрузку
+            for i in {1..10}; do
+              curl -s http://user-service:8000/health > /dev/null &
+              curl -s http://user-service:8000/users > /dev/null &
+              curl -s http://user-service:8000/users/$((RANDOM % 100 + 1)) > /dev/null &
+              sleep 0.1
+            done
+            sleep 1
+          done
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
